@@ -1,0 +1,130 @@
+[
+  {
+    "id": "86033c7b-78f5-4ba4-aabf-4da97375f006",
+    "contact": {
+      "naam": "test",
+      "email": "test@test.nl",
+      "telefoon": "0612121212",
+      "bedrijf": "rotterdambouw"
+    },
+    "answers": [
+      {
+        "question": "Wat herken je het meest?",
+        "answers": [
+          "Verouderde website",
+          "Geen duidelijke digitale strategie"
+        ]
+      },
+      {
+        "question": "Wat is jullie prioriteit?",
+        "answers": [
+          "Een mobiele app"
+        ]
+      },
+      {
+        "question": "Hoe groot is jullie team?",
+        "answers": [
+          "6-20 personen"
+        ]
+      },
+      {
+        "question": "Wat is jullie budget?",
+        "answers": [
+          "€2.500 – €5.000"
+        ]
+      },
+      {
+        "question": "Hoe snel willen jullie starten?",
+        "answers": [
+          "Geen haast, oriënterend"
+        ]
+      }
+    ],
+    "submittedAt": "2026-06-07T18:03:13.217Z"
+  },
+  {
+    "id": "d6b4a935-6337-4b8d-998e-4c430d91cd5d",
+    "contact": {
+      "naam": "Sabr ",
+      "email": "test@test.nl",
+      "telefoon": "0612121212",
+      "bedrijf": "rotterdambouw"
+    },
+    "answers": [
+      {
+        "question": "Wat herken je het meest?",
+        "answers": [
+          "Verouderde website",
+          "Geen duidelijke digitale strategie"
+        ]
+      },
+      {
+        "question": "Wat is jullie prioriteit?",
+        "answers": [
+          "Automatiseringen & koppelingen"
+        ]
+      },
+      {
+        "question": "Hoe groot is jullie team?",
+        "answers": [
+          "Solo / freelancer"
+        ]
+      },
+      {
+        "question": "Wat is jullie budget?",
+        "answers": [
+          "< €2.500"
+        ]
+      },
+      {
+        "question": "Hoe snel willen jullie starten?",
+        "answers": [
+          "Zo snel mogelijk"
+        ]
+      }
+    ],
+    "submittedAt": "2026-06-07T01:17:29.330Z"
+  },
+  {
+    "id": "d4a77e70-f884-4a23-8882-b7d2ab02fe11",
+    "contact": {
+      "naam": "test",
+      "email": "test@test.nl",
+      "telefoon": "0612121212",
+      "bedrijf": "test"
+    },
+    "answers": [
+      {
+        "question": "Wat herken je het meest?",
+        "answers": [
+          "Verouderde website"
+        ]
+      },
+      {
+        "question": "Wat is jullie prioriteit?",
+        "answers": [
+          "Een mobiele app"
+        ]
+      },
+      {
+        "question": "Hoe groot is jullie team?",
+        "answers": [
+          "2-5 personen"
+        ]
+      },
+      {
+        "question": "Wat is jullie budget?",
+        "answers": [
+          "€2.500 – €5.000"
+        ]
+      },
+      {
+        "question": "Hoe snel willen jullie starten?",
+        "answers": [
+          "Binnen 1 maand"
+        ]
+      }
+    ],
+    "submittedAt": "2026-06-07T01:15:38.889Z"
+  }
+]
