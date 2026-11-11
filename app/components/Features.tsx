@@ -127,7 +127,7 @@ function CardVisual({ type }: { type: string }) {
 
 function ElaraVisual() {
   const lines: { content: React.ReactNode; delay: number }[] = [
-    { content: <span className="text-white/25">// WhatsApp — 02:14</span>, delay: 0 },
+    { content: <span className="text-white/25">// WhatsApp · 02:14</span>, delay: 0 },
     {
       content: (
         <span>
@@ -446,7 +446,7 @@ export default function Features() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 max-md:mb-8 max-md:gap-4">
           <div>
             <h2 className="font-[family-name:var(--font-outfit)] text-4xl md:text-6xl font-[900] text-[#E9E8E3] uppercase leading-[0.85] tracking-tight max-md:text-[1.85rem] max-md:leading-[0.92]">
-              Gebouwd om te <span className="italic font-normal text-[#FF9220]">groeien</span>
+              Gebouwd om te <span className="italic font-normal text-[#ffffff]">groeien</span>
             </h2>
             <p className="mt-4 text-white/35 text-[14px] md:text-[15px] max-w-md">
               Technologie die jouw bedrijf niet alleen laat groeien, maar laat domineren.

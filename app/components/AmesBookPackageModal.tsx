@@ -84,7 +84,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
         <div className="px-5 pt-5 pb-4 border-b border-white/[0.06]">
           <div className="flex items-start justify-between gap-3 mb-4">
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1801AC]/25 border border-[#1801AC]/35 shrink-0">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#CD9861]/25 border border-[#CD9861]/35 shrink-0">
                 <Calendar className="w-4 h-4 text-white/80" strokeWidth={2} />
               </span>
               <div className="min-w-0">
@@ -108,7 +108,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
           </div>
           <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#1801AC] to-[#FF9220]/80 transition-all duration-500 ease-out"
+              className="h-full rounded-full bg-gradient-to-r from-[#c85810] to-[#ffffff] transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -128,7 +128,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
                     setCategory(key);
                     setStep("tier");
                   }}
-                  className="w-full text-left rounded-2xl border border-white/10 bg-white/[0.03] hover:border-[#FF9220]/35 hover:bg-[#FF9220]/[0.06] px-4 py-4 transition-all duration-200 group"
+                  className="w-full text-left rounded-2xl border border-white/10 bg-white/[0.03] hover:border-[#ffffff]/35 hover:bg-[#ffffff]/[0.06] px-4 py-4 transition-all duration-200 group"
                 >
                   <p className="font-[family-name:var(--font-outfit)] text-[15px] font-semibold text-white group-hover:text-[#E9E8E3]">
                     {categoryLabels[key]}
@@ -154,7 +154,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
               </button>
               <p className="text-[13px] text-white/55 mb-3 leading-relaxed">
                 Kies je pakket voor{" "}
-                <span className="text-[#FF9220]/90">{categoryLabels[category]}</span>.
+                <span className="text-[#ffffff]/90">{categoryLabels[category]}</span>.
               </p>
               {tierOrder.map((t) => {
                 const meta = tierMeta[t];
@@ -170,7 +170,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
                     }}
                     className={`w-full text-left rounded-2xl border px-4 py-4 transition-all duration-200 ${
                       popular
-                        ? "border-[#FF9220]/35 bg-[#FF9220]/[0.06] hover:border-[#FF9220]/50"
+                        ? "border-[#ffffff]/35 bg-[#ffffff]/[0.06] hover:border-[#ffffff]/50"
                         : "border-white/10 bg-white/[0.03] hover:border-white/20"
                     }`}
                   >
@@ -183,7 +183,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
                       </div>
                       <div className="text-right shrink-0">
                         {popular && (
-                          <span className="text-[9px] uppercase tracking-wider text-[#FF9220] block mb-1">
+                          <span className="text-[9px] uppercase tracking-wider text-[#ffffff] block mb-1">
                             {meta.tag}
                           </span>
                         )}
@@ -209,8 +209,8 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
                 Ander pakket
               </button>
 
-              <div className="rounded-2xl border border-[#FF9220]/25 bg-[#FF9220]/[0.06] p-4">
-                <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.18em] text-[#FF9220]/80 uppercase mb-2">
+              <div className="rounded-2xl border border-[#ffffff]/25 bg-[#ffffff]/[0.06] p-4">
+                <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.18em] text-[#ffffff]/80 uppercase mb-2">
                   Jouw keuze
                 </p>
                 <p className="font-[family-name:var(--font-outfit)] text-xl font-bold text-white leading-snug">
@@ -227,11 +227,11 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
 
               <ul className="space-y-2 text-[12px] text-white/55">
                 <li className="flex gap-2">
-                  <Check className="w-4 h-4 text-[#FF9220] shrink-0" strokeWidth={2.5} />
-                  Op locatie in heel Zuid-Holland
+                  <Check className="w-4 h-4 text-[#ffffff] shrink-0" strokeWidth={2.5} />
+                  Praktijk in Rotterdam
                 </li>
                 <li className="flex gap-2">
-                  <Check className="w-4 h-4 text-[#FF9220] shrink-0" strokeWidth={2.5} />
+                  <Check className="w-4 h-4 text-[#ffffff] shrink-0" strokeWidth={2.5} />
                   Datum, locatie & WhatsApp in de boek scan
                 </li>
               </ul>
@@ -255,7 +255,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
               <Link
                 href={`/pakketten?c=${category}`}
                 onClick={handleClose}
-                className="text-center text-[12px] text-white/40 hover:text-[#FF9220]/85 transition-colors py-1"
+                className="text-center text-[12px] text-white/40 hover:text-[#ffffff]/85 transition-colors py-1"
               >
                 Bekijk pakketdetails
               </Link>
@@ -263,7 +263,7 @@ export default function AmesBookPackageModal({ open, onClose }: AmesBookPackageM
           ) : (
             <p className="text-center text-[11px] text-white/30 py-2">
               Vragen?{" "}
-              <Link href="/contact" onClick={handleClose} className="text-[#FF9220]/75 hover:text-[#FF9220]">
+              <Link href="/contact" onClick={handleClose} className="text-[#ffffff]/75 hover:text-[#ffffff]">
                 Neem contact op
               </Link>
             </p>

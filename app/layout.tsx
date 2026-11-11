@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fragment_Mono, Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "./components/CookieBanner";
+import AmesBookingHost from "./components/AmesBookingHost";
+import MaLoadingScreen from "./components/MaLoadingScreen";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,12 +31,12 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Ames detailing – Auto poetsen & reiniging op locatie",
+  title: "Lashstudio Bia · Wimperextensions in Vlaardingen",
   description:
-    "Professionele auto detailing en reiniging op locatie. Ames detailing komt naar jou toe zodat jouw auto weer showroomklaar is.",
+    "Lash stylist in Vlaardingen. Luxury natural en glam lashes. Soft, wispy en volume.",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/lashstudio-bia-logo.png",
+    apple: "/lashstudio-bia-logo.png",
   },
 };
 
@@ -56,10 +58,21 @@ export default function RootLayout({
       className={`${inter.variable} ${fragmentMono.variable} ${outfit.variable} ${playfair.variable} antialiased`}
     >
       <body
-        className="min-h-screen flex flex-col font-[family-name:var(--font-inter)] bg-[#0a0a0a] text-white"
-        style={{ backgroundColor: "#0a0a0a", color: "#ffffff" }}
+        className="min-h-screen flex flex-col font-[family-name:var(--font-inter)] bg-[#0a0a0a] text-[#F6EDE4]"
+        style={{ backgroundColor: "#0a0a0a", color: "#F6EDE4" }}
       >
+        <div id="ma-loader" className="ma-loader" role="status" aria-label="Lashstudio Bia">
+          <img
+            src="/lashstudio-bia-logo.png"
+            alt=""
+            width={512}
+            height={512}
+            className="ma-loader__logo"
+          />
+        </div>
+        <MaLoadingScreen />
         {children}
+        <AmesBookingHost />
         <CookieBanner />
       </body>
     </html>

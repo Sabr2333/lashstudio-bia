@@ -95,7 +95,7 @@ export default function CookieBanner() {
           >
             <div className="relative z-[1] px-6 pt-5 pb-5">
               <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.18em] text-white/25 uppercase mb-2">
-                Ames detailing
+                Lashstudio Bia
               </p>
               <h3
                 id="cookie-banner-title"

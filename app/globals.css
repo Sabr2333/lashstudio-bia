@@ -5,8 +5,8 @@
   --bg-medium: #111111;
   --bg-light: #1a1a1a;
   --bg-hero: #0a0a0a;
-  --accent: #ffffff;
-  --accent-light: #cccccc;
+  --accent: #CD9861;
+  --accent-light: #CD9861;
   --white: #ffffff;
   --black: #0a0a0a;
 }
@@ -30,6 +30,10 @@ body {
   overflow-x: clip;
   overscroll-behavior-y: none;
   touch-action: manipulation;
+}
+
+.luxe-review-marquee:hover .ames-marquee-track {
+  animation-play-state: running;
 }
 
 /* Mobiel menu: verberg hamburger als menu open is */
@@ -151,6 +155,10 @@ a {
   animation: rotateBorder 6s linear infinite;
 }
 
+.hero-on-light .letter-stroke {
+  stroke: rgba(26, 2, 0, 0.4);
+}
+
 .letter-stroke {
   fill: none;
   stroke: rgba(255, 255, 255, 0.5);
@@ -161,7 +169,7 @@ a {
 
 .letter-stroke-orange {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.92);
+  stroke: #CD9861;
   stroke-width: 1.15;
   stroke-dasharray: 100 420;
   animation: letterDashOrange 4.2s linear infinite;
@@ -174,8 +182,8 @@ a {
 }
 
 .hero-orange-glow {
-  filter: drop-shadow(0 0 18px rgba(255, 120, 40, 0.45))
-    drop-shadow(0 0 42px rgba(255, 90, 20, 0.22));
+  filter: drop-shadow(0 0 18px rgba(205, 152, 97, 0.45))
+    drop-shadow(0 0 42px rgba(205, 152, 97, 0.28));
 }
 
 .scan-headline-wrap {
@@ -192,8 +200,8 @@ a {
 }
 
 .scan-headline-wrap .scan-headline-glow {
-  filter: drop-shadow(0 0 14px rgba(255, 120, 40, 0.38))
-    drop-shadow(0 0 28px rgba(255, 90, 20, 0.16));
+  filter: drop-shadow(0 0 14px rgba(205, 152, 97, 0.38))
+    drop-shadow(0 0 28px rgba(205, 152, 97, 0.22));
 }
 
 .cookie-card {
@@ -210,7 +218,7 @@ a {
   background: conic-gradient(
     from var(--card-angle, 0deg),
     transparent 0%,
-    rgba(255, 140, 60, 0.85) 8%,
+    rgba(205, 152, 97, 0.9) 8%,
     transparent 16%,
     transparent 50%,
     rgba(255, 255, 255, 0.45) 58%,
@@ -271,7 +279,22 @@ a {
   background-color: #0a0a0a;
 }
 
-/* Neutrale CTA met blauwe bloom / schaduw (geen vol-blauwe fill) */
+/* Zwarte pagina. Bronzen accenten blijven van het logo. */
+.luxe-light {
+  background-color: #0a0a0a;
+  color: #F6EDE4;
+}
+
+.luxe-light :where([class*="text-[#1A0200]"], [class*="fill-[#1A0200]"]) {
+  color: #F6EDE4;
+  fill: #F6EDE4;
+}
+
+.luxe-keep-dark :where(input, textarea)::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* CTA met oranje bloom / schaduw (past bij #ffffff) */
 .ames-btn-glow {
   position: relative;
   z-index: 0;
@@ -290,8 +313,8 @@ a {
   border-radius: inherit;
   background: radial-gradient(
     ellipse 85% 130% at 50% 55%,
-    rgba(24, 1, 172, 0.42) 0%,
-    rgba(56, 40, 220, 0.14) 48%,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.12) 48%,
     transparent 74%
   );
   z-index: -1;
@@ -318,35 +341,35 @@ a {
   color: #0a0a0a;
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.22),
-    0 0 24px rgba(24, 1, 172, 0.36),
-    0 0 48px rgba(24, 1, 172, 0.12);
+    0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 24px rgba(255, 255, 255, 0.28),
+    0 0 48px rgba(255, 255, 255, 0.1);
 }
 
 .ames-btn-glow--light:hover {
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.38),
-    0 0 34px rgba(24, 1, 172, 0.5),
-    0 0 70px rgba(48, 32, 220, 0.2);
+    0 0 0 1px rgba(255, 255, 255, 0.38),
+    0 0 34px rgba(255, 255, 255, 0.42),
+    0 0 70px rgba(255, 255, 255, 0.16);
 }
 
 .ames-btn-glow--dark {
   background: rgba(255, 255, 255, 0.07);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.18),
-    0 0 22px rgba(24, 1, 172, 0.34),
-    0 0 44px rgba(24, 1, 172, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 22px rgba(255, 255, 255, 0.22),
+    0 0 44px rgba(255, 255, 255, 0.08);
 }
 
 .ames-btn-glow--dark:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(24, 1, 172, 0.32);
+  border-color: rgba(255, 255, 255, 0.42);
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.32),
-    0 0 30px rgba(24, 1, 172, 0.46),
-    0 0 60px rgba(48, 32, 220, 0.16);
+    0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 0 30px rgba(255, 255, 255, 0.36),
+    0 0 60px rgba(255, 255, 255, 0.12);
 }
 
 .ames-btn-glow:disabled,
@@ -365,18 +388,18 @@ a {
 
 .ames-choice-glow {
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.35),
-    0 0 22px rgba(24, 1, 172, 0.28),
-    inset 0 0 28px rgba(24, 1, 172, 0.06);
+    0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 0 22px rgba(255, 255, 255, 0.22),
+    inset 0 0 28px rgba(255, 255, 255, 0.06);
 }
 
 .ames-progress-glow {
-  background: linear-gradient(90deg, rgba(24, 1, 172, 0.95), rgba(72, 48, 232, 0.9));
-  box-shadow: 0 0 14px rgba(24, 1, 172, 0.55);
+  background: linear-gradient(90deg, #CD9861, #CD9861);
+  box-shadow: 0 0 14px rgba(205, 152, 97, 0.45);
 }
 
 .ames-progress-glow--subtle {
-  background: linear-gradient(90deg, rgba(255, 146, 32, 0.55), rgba(255, 146, 32, 0.35));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35));
   box-shadow: none;
 }
 
@@ -395,7 +418,7 @@ a {
   background: conic-gradient(
     from var(--card-angle, 0deg),
     transparent 0%,
-    rgba(255, 140, 60, 0.85) 8%,
+    rgba(205, 152, 97, 0.9) 8%,
     transparent 16%,
     transparent 50%,
     rgba(255, 255, 255, 0.45) 58%,
@@ -427,7 +450,7 @@ a {
   background: conic-gradient(
     from var(--card-angle, 0deg),
     transparent 0%,
-    rgba(255, 140, 60, 0.85) 8%,
+    rgba(205, 152, 97, 0.9) 8%,
     transparent 16%,
     transparent 50%,
     rgba(255, 255, 255, 0.45) 58%,
@@ -467,10 +490,10 @@ a {
 @keyframes amesHelpTabPulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(24, 1, 172, 0.22);
+    box-shadow: 0 0 0 0 rgba(205, 152, 97, 0.28);
   }
   50% {
-    box-shadow: 0 0 0 5px rgba(24, 1, 172, 0.08);
+    box-shadow: 0 0 0 5px rgba(205, 152, 97, 0.1);
   }
 }
 
@@ -530,8 +553,8 @@ a {
 }
 
 .ames-maatwerk-tag:hover {
-  border-color: rgba(255, 146, 32, 0.25);
-  background: rgba(255, 146, 32, 0.06);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 @keyframes amesMaatwerkGlow {
@@ -577,7 +600,7 @@ a {
 
 /* Curved arrow CTA — Playfair label + getekende pijl (Ames oranje) */
 .ames-hero-arrow {
-  color: #ff9220;
+  color: #CD9861;
   text-decoration: none;
   transition: opacity 0.25s ease;
 }
@@ -601,7 +624,7 @@ a {
   font-weight: 500;
   font-size: 1.12rem;
   line-height: 1.15;
-  color: #ff9220;
+  color: #CD9861;
   text-align: right;
   transform: rotate(-4deg);
   margin-bottom: 10px;
@@ -617,14 +640,14 @@ a {
 }
 
 .ames-hero-arrow:hover .ames-hero-arrow__label {
-  color: #ffb04a;
+  color: #CD9861;
 }
 
 .ames-hero-arrow__svg {
   width: 112px;
   height: auto;
   overflow: visible;
-  filter: drop-shadow(0 4px 10px rgba(255, 146, 32, 0.28));
+  filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.28));
 }
 
 @media (min-width: 768px) {
@@ -673,7 +696,7 @@ a {
 }
 
 .ames-hero-arrow--showcase {
-  color: #ff9220;
+  color: #CD9861;
 }
 
 /* Showcase: stip = start van de curve (onder label, in de kolom-gap) */
@@ -704,19 +727,19 @@ a {
 }
 
 .ames-hero-arrow--showcase .ames-hero-arrow__label {
-  color: #ff9220;
+  color: #CD9861;
   text-shadow:
-    0 0 22px rgba(255, 146, 32, 0.42),
+    0 0 22px rgba(205, 152, 97, 0.45),
     0 2px 14px rgba(0, 0, 0, 0.7);
   animation: amesHeroArrowLabelGlow 3.2s ease-in-out infinite;
 }
 
 .ames-hero-arrow--showcase:hover .ames-hero-arrow__label {
-  color: #ffb861;
+  color: #CD9861;
 }
 
 .ames-hero-arrow--showcase .ames-hero-arrow__svg {
-  filter: drop-shadow(0 4px 14px rgba(255, 146, 32, 0.5)) drop-shadow(0 0 20px rgba(255, 146, 32, 0.28));
+  filter: drop-shadow(0 4px 14px rgba(205, 152, 97, 0.55)) drop-shadow(0 0 20px rgba(205, 152, 97, 0.32));
   animation: amesHeroArrowSvgGlow 3.2s ease-in-out infinite;
 }
 
@@ -746,13 +769,13 @@ a {
   0%,
   100% {
     text-shadow:
-      0 0 18px rgba(255, 146, 32, 0.32),
+      0 0 18px rgba(255, 255, 255, 0.32),
       0 2px 14px rgba(0, 0, 0, 0.7);
   }
   50% {
     text-shadow:
-      0 0 28px rgba(255, 146, 32, 0.55),
-      0 0 8px rgba(255, 180, 80, 0.35),
+      0 0 28px rgba(255, 255, 255, 0.55),
+      0 0 8px rgba(255, 255, 255, 0.35),
       0 2px 14px rgba(0, 0, 0, 0.7);
   }
 }
@@ -760,10 +783,10 @@ a {
 @keyframes amesHeroArrowSvgGlow {
   0%,
   100% {
-    filter: drop-shadow(0 4px 12px rgba(255, 146, 32, 0.42)) drop-shadow(0 0 16px rgba(255, 146, 32, 0.22));
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.42)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.22));
   }
   50% {
-    filter: drop-shadow(0 4px 16px rgba(255, 146, 32, 0.58)) drop-shadow(0 0 26px rgba(255, 146, 32, 0.38));
+    filter: drop-shadow(0 4px 16px rgba(255, 255, 255, 0.58)) drop-shadow(0 0 26px rgba(255, 255, 255, 0.38));
   }
 }
 
@@ -872,9 +895,9 @@ a {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 9999px;
-  background: linear-gradient(145deg, #ffb861 0%, #ff9220 55%, #e87810 100%);
+  background: linear-gradient(145deg, #ffffff 0%, #f3f3f3 55%, #cfcfcf 100%);
   border: 2px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(255, 146, 32, 0.35);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.35);
   transform: translate(0.35rem, 0.25rem);
   animation: amesFloatingMascotPeek 3.2s ease-in-out infinite;
 }
@@ -923,7 +946,7 @@ a {
   max-width: min(11.5rem, calc(100vw - 6rem));
   padding: 0.65rem 0.85rem 0.7rem;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 146, 32, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   background: linear-gradient(145deg, #161616 0%, #101018 100%);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.55),
@@ -939,8 +962,8 @@ a {
   width: 0.65rem;
   height: 0.65rem;
   background: #121218;
-  border-right: 1px solid rgba(255, 146, 32, 0.35);
-  border-bottom: 1px solid rgba(255, 146, 32, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   transform: rotate(-45deg);
 }
 
@@ -948,7 +971,7 @@ a {
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #ff9220;
+  color: #ffffff;
   line-height: 1.2;
 }
 
@@ -997,18 +1020,16 @@ button.ames-floating-book-v2 {
   gap: 0.5rem;
   padding: 0.65rem 1rem 0.65rem 0.85rem;
   border-radius: 9999px;
-  border: 1px solid transparent;
-  background:
-    linear-gradient(#12121a, #12121a) padding-box,
-    linear-gradient(120deg, rgba(255, 146, 32, 0.85), rgba(24, 1, 172, 0.75)) border-box;
-  color: #f2f2f2;
+  border: 1.5px solid #CD9861;
+  background: #CD9861;
+  color: #1A0200;
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   box-shadow:
     0 8px 28px rgba(0, 0, 0, 0.55),
-    0 0 24px rgba(24, 1, 172, 0.15);
+    0 0 24px rgba(205, 152, 97, 0.22);
   transition:
     transform 0.28s ease,
     box-shadow 0.28s ease;
@@ -1018,7 +1039,7 @@ button.ames-floating-book-v2:hover {
   transform: scale(1.04) translateY(-1px);
   box-shadow:
     0 10px 32px rgba(0, 0, 0, 0.58),
-    0 0 28px rgba(255, 146, 32, 0.2);
+    0 0 28px rgba(255, 255, 255, 0.2);
 }
 
 button.ames-floating-book-v2 .ames-floating-book-v2__icon {
@@ -1028,31 +1049,52 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 9999px;
-  background: linear-gradient(145deg, #2818a8 0%, #160a78 100%);
-  color: rgba(255, 255, 255, 0.95);
+  background: #1A0200;
+  color: #CD9861;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+button.ames-floating-spoed {
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem 0.65rem 0.85rem;
+  border-radius: 9999px;
+  border: 1.5px solid #CD9861;
+  background: #CD9861;
+  color: #1A0200;
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(205, 152, 97, 0.22);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+button.ames-floating-spoed:hover {
+  transform: scale(1.04) translateY(-1px);
+}
+
+button.ames-floating-spoed .ames-floating-spoed__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: #1A0200;
+  color: #CD9861;
+}
+
 @media (max-width: 767px) {
-  .ames-float-dock__bar {
-    padding: 0.3rem 0.35rem 0.3rem 0.45rem;
-    border-radius: 9999px;
-    background: rgba(14, 14, 16, 0.94);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    box-shadow:
-      0 14px 44px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-
-  .ames-float-dock__divider {
-    width: 1px;
-    height: 1.85rem;
-    margin: 0 0.2rem 0 0.35rem;
-    background: rgba(255, 255, 255, 0.12);
-  }
-
   .ames-floating-book-cluster {
     flex-direction: row;
     align-items: center;
@@ -1062,14 +1104,22 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   }
 
   button.ames-floating-book-v2 {
-    padding: 0.45rem 0.65rem 0.45rem 0.55rem;
-    font-size: 0.8125rem;
-    box-shadow: none;
-    background: transparent;
-    border-color: transparent;
+    padding: 0.62rem 1.05rem 0.62rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 700;
   }
 
   button.ames-floating-book-v2 .ames-floating-book-v2__icon {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+
+  button.ames-floating-spoed {
+    padding: 0.5rem 0.75rem 0.5rem 0.55rem;
+    font-size: 0.8125rem;
+  }
+
+  button.ames-floating-spoed .ames-floating-spoed__icon {
     width: 1.55rem;
     height: 1.55rem;
   }
@@ -1100,88 +1150,93 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
 .ames-btn-glow--orange::before {
   background: radial-gradient(
     ellipse 85% 130% at 50% 55%,
-    rgba(255, 146, 32, 0.45) 0%,
-    rgba(255, 90, 16, 0.16) 48%,
+    rgba(205, 152, 97, 0.55) 0%,
+    rgba(205, 152, 97, 0.2) 48%,
     transparent 74%
   );
 }
 
 .ames-btn-glow--orange.ames-btn-glow--light {
   box-shadow:
-    0 0 0 1px rgba(255, 146, 32, 0.28),
-    0 0 26px rgba(255, 120, 40, 0.32),
-    0 0 52px rgba(255, 90, 16, 0.12);
+    0 0 0 1px rgba(205, 152, 97, 0.4),
+    0 0 26px rgba(205, 152, 97, 0.35),
+    0 0 52px rgba(205, 152, 97, 0.16);
 }
 
 .ames-btn-glow--orange.ames-btn-glow--light:hover {
   box-shadow:
-    0 0 0 1px rgba(255, 146, 32, 0.42),
-    0 0 36px rgba(255, 120, 40, 0.48),
-    0 0 72px rgba(255, 90, 16, 0.2);
+    0 0 0 1px rgba(205, 152, 97, 0.55),
+    0 0 36px rgba(205, 152, 97, 0.48),
+    0 0 72px rgba(205, 152, 97, 0.22);
 }
 
-/* Primaire Ames-knop: blauw + subtiele glow + lichtsheen */
-.ames-btn-glow--blue {
+/* Primaire Ames-knop: oranje/amber + subtiele glow + lichtsheen */
+.ames-btn-glow--blue,
+.ames-btn-glow--orange {
   overflow: hidden;
   font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
-  color: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(72, 58, 180, 0.38);
+  color: #071018;
+  border: 1px solid rgba(205, 152, 97, 0.85);
   background: linear-gradient(
     145deg,
-    #2214a8 0%,
-    #140878 42%,
-    #1801ac 78%,
-    #1e1290 100%
+    #CD9861 0%,
+    #CD9861 48%,
+    #CD9861 100%
   );
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.22),
-    0 0 18px rgba(24, 1, 172, 0.28),
+    0 0 0 1px rgba(205, 152, 97, 0.35),
+    0 0 22px rgba(205, 152, 97, 0.38),
     0 6px 20px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(60, 42, 12, 0.28);
 }
 
-.ames-btn-glow--blue > * {
+.ames-btn-glow--blue > *,
+.ames-btn-glow--orange > * {
   position: relative;
   z-index: 1;
 }
 
-.ames-btn-glow--blue::before {
+.ames-btn-glow--blue::before,
+.ames-btn-glow--orange::before {
   background: radial-gradient(
     ellipse 95% 150% at 50% 45%,
-    rgba(48, 36, 160, 0.32) 0%,
-    rgba(24, 1, 172, 0.14) 42%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.16) 42%,
     transparent 70%
   );
-  opacity: 0.5;
+  opacity: 0.55;
   filter: blur(10px);
 }
 
-.ames-btn-glow--blue:hover::before {
-  opacity: 0.62;
+.ames-btn-glow--blue:hover::before,
+.ames-btn-glow--orange:hover::before {
+  opacity: 0.72;
   filter: blur(11px);
 }
 
-.ames-btn-glow--blue:hover {
-  border-color: rgba(88, 72, 200, 0.48);
+.ames-btn-glow--blue:hover,
+.ames-btn-glow--orange:hover {
+  border-color: #CD9861;
   background: linear-gradient(
     145deg,
-    #2818b8 0%,
-    #160a88 45%,
-    #1c1098 100%
+    #E6D6C7 0%,
+    #CD9861 48%,
+    #CD9861 100%
   );
   box-shadow:
-    0 0 0 1px rgba(24, 1, 172, 0.32),
-    0 0 24px rgba(24, 1, 172, 0.36),
-    0 0 48px rgba(24, 1, 172, 0.12),
+    0 0 0 1px rgba(205, 152, 97, 0.5),
+    0 0 28px rgba(205, 152, 97, 0.48),
+    0 0 52px rgba(205, 152, 97, 0.2),
     0 8px 24px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-.ames-btn-glow--blue::after {
+.ames-btn-glow--blue::after,
+.ames-btn-glow--orange::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1210,7 +1265,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   }
 }
 
-/* Pakketten-knoppen — geen ames-btn-glow (voorkomt blauwe bloom over tekst) */
+/* Pakketten-knoppen — geen ames-btn-glow (voorkomt glow over tekst) */
 .ames-package-btn {
   position: relative;
   isolation: isolate;
@@ -1228,46 +1283,35 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
 }
 
 .ames-package-btn--primary {
-  color: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(88, 72, 180, 0.55);
-  background: linear-gradient(180deg, #2218a0 0%, #180c7a 52%, #130868 100%);
+  color: #071018;
+  border: 1px solid rgba(205, 152, 97, 0.85);
+  background: linear-gradient(180deg, #CD9861 0%, #CD9861 48%, #CD9861 100%);
   box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(24, 1, 172, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 0 20px rgba(205, 152, 97, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .ames-package-btn--primary:hover {
-  border-color: rgba(88, 72, 180, 0.52);
+  border-color: #CD9861;
   box-shadow:
     0 5px 18px rgba(0, 0, 0, 0.42),
-    0 0 20px rgba(24, 1, 172, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 0 24px rgba(205, 152, 97, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .ames-package-btn--secondary {
-  color: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(72, 58, 160, 0.42);
-  background: linear-gradient(
-    180deg,
-    rgba(24, 1, 172, 0.16) 0%,
-    rgba(18, 14, 40, 0.92) 48%,
-    #12121a 100%
-  );
+  color: #1A0200;
+  border: 1px solid #CD9861;
+  background: #CD9861;
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.42),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 rgba(205, 152, 97, 0.16);
 }
 
 .ames-package-btn--secondary:hover {
-  border-color: rgba(88, 72, 180, 0.52);
-  background: linear-gradient(
-    180deg,
-    rgba(24, 1, 172, 0.22) 0%,
-    rgba(22, 16, 48, 0.95) 48%,
-    #16161f 100%
-  );
+  border-color: #CD9861;
+  background: #CD9861;
 }
 
 .ames-package-btn::after {
@@ -1304,7 +1348,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   }
 }
 
-/* Ames detailing stage — SVG/CSS animatie (geen video) */
+/* MA Autodetailing stage — SVG/CSS animatie (geen video) */
 .ames-live-card {
   isolation: isolate;
 }
@@ -1387,7 +1431,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   inset: -20%;
   background: radial-gradient(
     ellipse 50% 45% at 70% 40%,
-    rgba(255, 120, 40, 0.12) 0%,
+    rgba(255, 255, 255, 0.12) 0%,
     transparent 55%
   );
   animation: amesDetailAurora 10s ease-in-out infinite;
@@ -1406,7 +1450,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
 }
 
 .ames-detail-logo-wrap {
-  filter: drop-shadow(0 0 20px rgba(255, 146, 32, 0.25));
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25));
 }
 
 .ames-detail-logo-shine {
@@ -1554,7 +1598,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   width: calc(6px + (var(--i) % 4) * 3px);
   height: calc(6px + (var(--i) % 4) * 3px);
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(255, 146, 32, 0.25));
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.25));
   border: 1px solid rgba(255, 255, 255, 0.15);
   animation: amesBubbleRise calc(5s + (var(--i) * 0.35s)) ease-in infinite;
   animation-delay: calc(var(--i) * -0.7s);
@@ -1766,6 +1810,10 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   background: linear-gradient(to top, #0a0a0a 0%, #0c0c0c 100%);
 }
 
+.ames-packages-section.luxe-light {
+  background-color: #0a0a0a;
+}
+
 /* Intro + tabs: links uitlijnen (zelfde lijn als showcase-tekst) */
 .ames-packages-intro {
   width: 100%;
@@ -1788,9 +1836,9 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   background: linear-gradient(
     115deg,
     transparent 0%,
-    rgba(24, 1, 172, 0.12) 25%,
+    rgba(205, 152, 97, 0.12) 25%,
     rgba(48, 32, 220, 0.18) 45%,
-    rgba(24, 1, 172, 0.1) 65%,
+    rgba(205, 152, 97, 0.1) 65%,
     transparent 100%
   );
   background-size: 200% 200%;
@@ -1811,7 +1859,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   right: -12%;
   background: radial-gradient(
     circle,
-    rgba(24, 1, 172, 0.55) 0%,
+    rgba(205, 152, 97, 0.55) 0%,
     rgba(40, 20, 210, 0.28) 35%,
     transparent 68%
   );
@@ -1827,7 +1875,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   background: radial-gradient(
     circle,
     rgba(56, 32, 230, 0.4) 0%,
-    rgba(24, 1, 172, 0.2) 45%,
+    rgba(205, 152, 97, 0.2) 45%,
     transparent 70%
   );
   filter: blur(92px);
@@ -1855,7 +1903,7 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
   left: 8%;
   background: radial-gradient(
     circle,
-    rgba(255, 146, 32, 0.18) 0%,
+    rgba(255, 255, 255, 0.18) 0%,
     transparent 70%
   );
   filter: blur(64px);
@@ -2127,13 +2175,13 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
 }
 
 .ames-review-card:hover {
-  border-color: rgba(255, 146, 32, 0.22);
+  border-color: rgba(255, 255, 255, 0.22);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   transform: translateY(-2px);
 }
 
 .ames-review-google-badge {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 32px rgba(80, 60, 20, 0.08);
 }
 
 /* Chat bubble entrance */
@@ -2239,4 +2287,51 @@ button.ames-floating-book-v2 .ames-floating-book-v2__icon {
 }
 .animate-code-blink-2 {
   animation: code-blink 3s ease-in-out infinite 1s;
+}
+
+.ma-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0a0a;
+  background-image: none;
+  opacity: 1;
+  transition: opacity 0.55s ease;
+}
+
+.ma-loader--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ma-loader__logo {
+  width: clamp(168px, min(46vw, 34vh), 260px);
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  animation: maLoaderIn 0.7s ease both;
+}
+
+@keyframes maLoaderIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ma-loader {
+    transition: none;
+  }
+
+  .ma-loader__logo {
+    animation: none;
+  }
 }

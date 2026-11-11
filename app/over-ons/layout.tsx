@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Over ons – Ames detailing",
+  title: "Over ons · Lashstudio Bia",
   description:
-    "Leer Ames detailing kennen: premium autowas en detailing op locatie in heel Zuid-Holland. Vakmanschap, flexibiliteit en showroom-resultaat.",
+    "Lash stylist in Vlaardingen. Luxury natural en glam lashes. Soft, wispy en volume.",
 };
 
 export default function OverOnsLayout({ children }: { children: React.ReactNode }) {

@@ -8,40 +8,40 @@ import BookingStepsSection from "../components/BookingStepsSection";
 const whyItems = [
   {
     icon: Sparkles,
-    title: "A-merk producten",
-    text: "Alleen professionele middelen en technieken die veilig zijn voor lak, leer en interieur.",
+    title: "Soft, wispy en volume",
+    text: "Van een zachte set tot glam. One by one of alle volume sets.",
   },
   {
     icon: Clock,
-    title: "Tijdsbesparing",
-    text: "Wij rijden naar jou toe. Geen wachtrij, geen rit naar de wasstraat.",
+    title: "Luxury natural en glam",
+    text: "Lashstudio Bia werkt met luxury natural en glam lashes.",
   },
   {
     icon: Users,
-    title: "Ervaren team",
-    text: "Detailers met oog voor detail en jarenlange ervaring in autoreiniging.",
+    title: "Lash stylist",
+    text: "Bia is lash stylist in Vlaardingen.",
   },
   {
     icon: Calendar,
-    title: "Flexibel plannen",
-    text: "Afspraak op een moment dat past bij jouw agenda, thuis of op werk.",
+    title: "Afspraak via WhatsApp",
+    text: "Boek op 06 2048 5783. Annuleren of verzetten kan kosteloos tot 24 uur van tevoren.",
   },
   {
     icon: Shield,
-    title: "Passie voor auto's",
-    text: "Elke auto behandelen we alsof het onze eigen is, binnen én buiten.",
+    title: "Nazorg",
+    text: "Vermijd de eerste 24 uur water, stoom, sauna en oogmake-up.",
   },
 ];
 
 const stats = [
-  { value: "500+", label: "Auto's op locatie" },
-  { value: "365", label: "Dagen boekbaar" },
-  { value: "5+", label: "Jaar ervaring" },
+  { value: "Soft", label: "Natuurlijk" },
+  { value: "Wispy", label: "Luchtig" },
+  { value: "Volume", label: "Glam" },
 ];
 
 export default function OverOnsPage() {
   return (
-    <div className="ames-page-shell min-h-screen flex flex-col">
+    <div className="ames-page-shell luxe-light min-h-screen flex flex-col">
       <header className="relative z-10 flex items-center justify-between px-6 md:px-8 py-6">
         <Link
           href="/"
@@ -52,72 +52,51 @@ export default function OverOnsPage() {
         </Link>
         <Link href="/" className="opacity-95 hover:opacity-100 transition-opacity">
           <Image
-            src="/Gemini_Generated_Image_q9s8bpq9s8bpq9s8-removebg-preview.png"
-            alt="Ames Car Detailing"
-            width={873}
-            height={229}
-            className="h-8 w-auto md:h-9 object-contain"
+            src="/lashstudio-bia-logo.png"
+            alt="Lashstudio Bia"
+            width={488}
+            height={200}
+            className="h-9 w-auto md:h-10 object-contain"
           />
         </Link>
       </header>
 
       <main className="relative z-10 flex-1 px-6 md:px-8 max-w-[1100px] mx-auto w-full pb-24">
         <div className="pt-6 pb-12 md:pb-16">
-          <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] tracking-[0.2em] text-white/55 uppercase mb-5 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#FF9220]" />
+          <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] tracking-[0.2em] text-white/55 uppercase mb-5">
             Over ons
           </p>
           <h1 className="font-[family-name:var(--font-outfit)] text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-[0.9] mb-5 max-w-3xl">
-            Premium detailing,{" "}
-            <span className="italic font-normal text-[#FF9220]">wanneer het jou uitkomt</span>
+            Luxury lashes,{" "}
+            <span className="italic font-normal text-[#CD9861]">soft en wispy</span>
           </h1>
           <p className="text-white/60 text-[15px] md:text-base leading-relaxed max-w-2xl">
-            Ames detailing brengt professionele autowas en interieurreiniging naar jouw adres. Efficiënt,
-            zorgvuldig en afgestemd op jouw drukke week, zonder concessies op kwaliteit.
+            Lashstudio Bia is lash stylist in Vlaardingen. Luxury natural en glam lashes.
+            Soft, wispy en volume.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center mb-20 md:mb-28">
-          <div className="order-2 lg:order-1">
-            <h2 className="font-[family-name:var(--font-outfit)] text-2xl md:text-3xl font-bold text-white mb-4">
-              Geef je auto de zorg die het verdient
-            </h2>
-            <p className="text-white/55 text-[15px] leading-relaxed mb-4">
-              Bij Ames detailing draait alles om vakmanschap, efficiëntie en een resultaat waar je trots
-              op rijdt. We werken met bewezen methodes en premium producten om lak, velgen en interieur
-              weer fris en verzorgd te maken.
-            </p>
-            <p className="text-white/55 text-[15px] leading-relaxed">
-              Of je nu een snelle opfrisser nodig hebt of een grondige behandeling: wij komen naar jou toe
-              in heel Zuid-Holland, zodat jij kunt blijven doen waar je mee bezig was.
-            </p>
-          </div>
+        <div className="max-w-2xl mb-8 md:mb-10">
+          <h2 className="font-[family-name:var(--font-outfit)] text-2xl md:text-3xl font-bold text-white mb-4">
+            Say it with lashes
+          </h2>
+          <p className="text-white/55 text-[15px] leading-relaxed mb-4">
+            Pretty lashes for pretty girls. Soft 5D lashes met een C curl, of een volume set
+            als je meer glam wilt.
+          </p>
+          <p className="text-white/55 text-[15px] leading-relaxed">
+            Good lashes. Good mood. Every time. Boek je afspraak via WhatsApp op 06 2048 5783.
+          </p>
+        </div>
 
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="service-card animate-float-slow w-full max-w-[420px] rounded-3xl p-[2px]">
-              <div className="relative overflow-hidden rounded-[22px] bg-[#121218] aspect-[4/5] md:aspect-[3/4]">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster="/videos/hero-car-wash-poster.jpg"
-                  className="absolute inset-0 h-full w-full object-cover"
-                >
-                  <source src="/videos/hero-car-wash.mp4" type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.18em] text-white/50 uppercase mb-1">
-                    Ames detailing
-                  </p>
-                  <p className="font-[family-name:var(--font-outfit)] text-lg font-semibold text-white">
-                    Autoreiniging op locatie
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="mx-auto mb-20 md:mb-28 flex w-full max-w-[320px] items-center justify-center">
+          <Image
+            src="/lashstudio-bia-logo.png"
+            alt="Lashstudio Bia"
+            width={512}
+            height={512}
+            className="h-auto w-full"
+          />
         </div>
 
         <div className="grid grid-cols-3 gap-4 md:gap-8 mb-20 md:mb-28 border-y border-white/[0.06] py-10">
@@ -135,27 +114,29 @@ export default function OverOnsPage() {
 
         <section className="mb-20 md:mb-28">
           <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] tracking-[0.2em] text-white/55 uppercase mb-3">
-            Waarom Ames
+            Waarom Lashstudio Bia
           </p>
           <h2 className="font-[family-name:var(--font-outfit)] text-3xl md:text-4xl font-bold text-white mb-10">
-            Autoreiniging aan huis, zonder gedoe
+            Een set die bij jou past
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-3">
             {whyItems.map((item) => (
               <div
                 key={item.title}
-                className="service-card rounded-2xl bg-[#12121a]/80 p-6 border border-white/[0.06]"
+                className="service-card flex items-start gap-4 rounded-2xl bg-[#12121a]/80 p-5 md:p-6 border border-white/[0.06]"
               >
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center mb-4 border border-[#1801AC]/30"
-                  style={{ backgroundColor: "rgba(24, 1, 172, 0.12)" }}
+                  className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center border border-[#CD9861]/30"
+                  style={{ backgroundColor: "rgba(212, 175, 55, 0.12)" }}
                 >
-                  <item.icon className="w-4 h-4 text-[#8B7EFF]" strokeWidth={1.5} />
+                  <item.icon className="w-4 h-4 text-[#CD9861]" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-[family-name:var(--font-outfit)] text-[15px] font-semibold text-white mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-white/50 text-[13px] leading-relaxed">{item.text}</p>
+                <div>
+                  <h3 className="font-[family-name:var(--font-outfit)] text-[15px] font-semibold text-white mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-white/50 text-[13px] md:text-[14px] leading-relaxed">{item.text}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -191,7 +172,7 @@ export default function OverOnsPage() {
 
       <footer className="relative z-10 border-t border-white/[0.06] py-8 text-center">
         <p className="text-xs text-white/35">
-          © {new Date().getFullYear()} Ames detailing. Autoreiniging op locatie.
+          © {new Date().getFullYear()} Lashstudio Bia. Wimperextensions in Vlaardingen.
         </p>
       </footer>
     </div>

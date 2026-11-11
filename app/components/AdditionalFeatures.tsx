@@ -89,7 +89,7 @@ export default function AdditionalFeatures() {
               Geselecteerd werk
             </p>
             <h2 className="font-[family-name:var(--font-outfit)] text-3xl md:text-5xl font-bold text-white leading-tight">
-              Recente <span className="italic font-normal text-[#FF9220]">projecten</span>
+              Recente <span className="italic font-normal text-[#ffffff]">projecten</span>
             </h2>
           </div>
           <Link

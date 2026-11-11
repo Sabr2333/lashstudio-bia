@@ -36,10 +36,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# lokale boekingen met klantgegevens
+/data/bookings.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 .expo/
+
+.vercel
 
 .vercel

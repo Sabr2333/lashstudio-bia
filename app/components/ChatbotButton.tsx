@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Calendar } from "lucide-react";
-import AmesBookPackageModal from "./AmesBookPackageModal";
+import { openAmesBooking } from "../lib/amesAvailability";
+import { AMES_CONTACT } from "../lib/amesPackages";
 
 const HINT_STORAGE_KEY = "ames-floating-book-hint-dismissed";
 
 export default function ChatbotButton() {
-  const [bookOpen, setBookOpen] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
 
   useEffect(() => {
@@ -32,13 +32,13 @@ export default function ChatbotButton() {
 
   const openBook = () => {
     dismissHint();
-    setBookOpen(true);
+    openAmesBooking();
   };
 
   return (
     <>
       <div className="ames-float-dock fixed bottom-6 right-5 sm:right-6 z-[9999] flex flex-col items-end gap-3 max-md:right-4 max-md:bottom-[max(1rem,env(safe-area-inset-bottom))]">
-        <div className="ames-float-dock__bar flex flex-col items-end gap-3 max-md:flex-row max-md:items-center max-md:gap-0">
+        <div className="ames-float-dock__bar flex flex-col items-end gap-3">
           <div className="ames-floating-book-cluster">
             {hintOpen && (
               <div
@@ -76,13 +76,11 @@ export default function ChatbotButton() {
             </button>
           </div>
 
-          <div className="ames-float-dock__divider hidden max-md:block" aria-hidden />
-
           <div className="relative shrink-0">
             <span className="absolute inset-0 rounded-full animate-ping bg-[#25D366]/30 pointer-events-none max-md:hidden" />
             <span className="absolute -inset-1 rounded-full border border-[#25D366]/25 animate-pulse pointer-events-none max-md:hidden" />
             <Link
-              href="https://wa.me/31640871617"
+              href={AMES_CONTACT.whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="ames-float-dock__wa relative w-12 h-12 sm:w-14 sm:h-14 max-md:w-11 max-md:h-11 rounded-full bg-[#25D366] border-2 border-white/20 hover:border-white/50 flex items-center justify-center shadow-lg shadow-[#25D366]/20 hover:shadow-[#25D366]/40 hover:scale-105 transition-all duration-300 touch-manipulation"
@@ -95,8 +93,6 @@ export default function ChatbotButton() {
           </div>
         </div>
       </div>
-
-      <AmesBookPackageModal open={bookOpen} onClose={() => setBookOpen(false)} />
     </>
   );
 }

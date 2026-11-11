@@ -4,20 +4,31 @@ import { useState, useEffect, useRef } from "react";
 import { Calendar, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { maPackages } from "../lib/amesPackages";
 
 const rotatingTexts = [
-  { top: "150+", bottom: "Projecten" },
-  { top: "5+ Jaar", bottom: "Ervaring" },
-  { top: "100%", bottom: "Op Maat" },
-  { top: "Premium", bottom: "Kwaliteit" },
+  { top: "One by one", bottom: "€30 tot €50" },
+  { top: "Volume", bottom: "€35 tot €65" },
+  { top: "24 uur", bottom: "Kosteloos wijzigen" },
+  { top: "Vlaardingen", bottom: "Lash stylist" },
+];
+
+const packageLinks = [
+  ...maPackages.map((item) => ({ label: item.title, href: item.href })),
+  { label: "Alle pakketten", href: "/pakketten" },
 ];
 
 const DURATION = 3000;
 const CIRCUMFERENCE = 2 * Math.PI * 26;
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -25,10 +36,21 @@ export default function Navbar() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 50);
+      const hero = document.querySelector("[data-home-hero]");
+      const heroBottom = hero instanceof HTMLElement ? hero.offsetHeight : window.innerHeight;
+      setPastHero(pathname === "/" && y > heroBottom - 80);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -63,20 +85,29 @@ export default function Navbar() {
   }, []);
 
   const dashOffset = CIRCUMFERENCE * (1 - progress);
+  const onDark = true;
+  const headerClear = isHome && !pastHero;
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50">
-        <nav className="max-w-[1400px] mx-auto flex items-center justify-between px-8 py-5 max-md:px-5 max-md:py-0 max-md:min-h-[max(3.25rem,calc(env(safe-area-inset-top)+3.25rem))] max-md:items-center md:grid md:grid-cols-3">
-          <div className="hidden md:flex items-center gap-4">
+      <header className={`fixed top-0 left-0 right-0 z-50 pointer-events-none ${headerClear ? "" : "bg-[#0a0a0a]/95 backdrop-blur-md"}`}>
+        <nav
+          className={`relative max-w-[1400px] mx-auto flex items-center justify-between px-8 py-4 max-md:px-5 max-md:py-0 max-md:items-center max-md:pointer-events-auto md:px-8 md:pt-5 md:pb-4 ${
+            isHome
+              ? "max-md:min-h-[max(4rem,calc(env(safe-area-inset-top)+4rem))] md:min-h-[6.75rem]"
+              : "max-md:min-h-[max(3.5rem,calc(env(safe-area-inset-top)+3.5rem))] md:min-h-[5.5rem]"
+          }`}
+        >
+          <div className="hidden md:grid md:grid-cols-3 md:items-start md:w-full md:pointer-events-auto">
+          <div className="hidden md:flex items-start gap-4 pt-0.5">
             <div className="relative w-14 h-14 flex items-center justify-center">
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56" fill="none">
-                <circle cx="28" cy="28" r="26" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" />
+                <circle cx="28" cy="28" r="26" stroke={onDark ? "rgba(255,255,255,0.08)" : "rgba(26,22,18,0.12)"} strokeWidth="1.5" />
               </svg>
               <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 56 56" fill="none">
                 <circle
                   cx="28" cy="28" r="26"
-                  stroke="rgba(255,255,255,0.5)"
+                  stroke={onDark ? "rgba(255,255,255,0.5)" : "rgba(26,22,18,0.55)"}
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeDasharray={CIRCUMFERENCE}
@@ -84,7 +115,7 @@ export default function Navbar() {
                   style={{ transition: "none" }}
                 />
               </svg>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={onDark ? "white" : "#1A0200"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="2" x2="12" y2="22" />
                 <line x1="2" y1="12" x2="22" y2="12" />
                 <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
@@ -92,53 +123,32 @@ export default function Navbar() {
               </svg>
             </div>
             <div className={`flex flex-col transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"}`}>
-              <span className="text-[14px] font-bold text-white leading-tight">
+              <span className={`text-[14px] font-bold leading-tight ${onDark ? "text-white" : "text-[#1A0200]"}`}>
                 {rotatingTexts[textIndex].top}
               </span>
-              <span className="text-[13px] text-white/50 leading-tight">
+              <span className={`text-[13px] leading-tight ${onDark ? "text-white/50" : "text-[#1A0200]/55"}`}>
                 {rotatingTexts[textIndex].bottom}
               </span>
             </div>
           </div>
 
-          <div className="flex justify-start md:justify-center shrink-0 max-md:flex-1 max-md:items-center max-md:justify-start max-md:pl-0">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-start opacity-95 hover:opacity-100 transition-opacity duration-300 max-md:h-11 max-md:-ml-9"
-              aria-label="Ames Car Detailing home"
-            >
-              <Image
-                src="/Gemini_Generated_Image_q9s8bpq9s8bpq9s8-removebg-preview.png"
-                alt="Ames Car Detailing"
-                width={873}
-                height={229}
-                priority
-                className="h-9 w-auto md:h-10 object-contain object-left max-md:h-[2.125rem]"
-                sizes="(max-width: 768px) 150px, 175px"
-              />
-            </Link>
-          </div>
+          <div className="hidden md:block" aria-hidden />
 
-          <div className="hidden md:flex items-center justify-end">
+          <div className="hidden md:flex items-start justify-end pt-0.5">
             <div className={`flex items-center gap-8 transition-all duration-500 ${scrolled ? "opacity-0 pointer-events-none absolute" : "opacity-100"}`}>
-              <Link href="/" className="text-[14px] text-white/60 hover:text-white transition-colors">
+              <Link href="/" className={`text-[14px] transition-colors ${onDark ? "text-white/60 hover:text-white" : "text-[#1A0200]/70 hover:text-[#1A0200]"}`}>
                 Home
               </Link>
               <div className="relative group">
-                <Link href="/#pakketten" className="text-[14px] text-white/60 hover:text-white transition-colors flex items-center gap-1.5">
+                <Link href="/#pakketten" className={`text-[14px] transition-colors flex items-center gap-1.5 ${onDark ? "text-white/60 hover:text-white" : "text-[#1A0200]/70 hover:text-[#1A0200]"}`}>
                   Pakketten
                   <svg className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-all duration-300 group-hover:rotate-180" viewBox="0 0 12 12" fill="none">
                     <path d="M3 5L6 8L9 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                  <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-2 min-w-[220px] shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-                    {[
-                      { label: "Interieur", href: "/pakketten?c=interieur" },
-                      { label: "Exterieur", href: "/pakketten?c=exterieur" },
-                      { label: "Combo", href: "/pakketten?c=combo" },
-                      { label: "Alle pakketten", href: "/pakketten" },
-                    ].map((item) => (
+                  <div className="bg-[#111] border border-white/[0.08] rounded-2xl p-2 min-w-[260px] shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+                    {packageLinks.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
@@ -150,10 +160,10 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <Link href="/over-ons" className="text-[14px] text-white/60 hover:text-white transition-colors">
+              <Link href="/over-ons" className={`text-[14px] transition-colors ${onDark ? "text-white/60 hover:text-white" : "text-[#1A0200]/70 hover:text-[#1A0200]"}`}>
                 Over ons
               </Link>
-              <Link href="/contact" className="text-[14px] text-white/60 hover:text-white transition-colors">
+              <Link href="/contact" className={`text-[14px] transition-colors ${onDark ? "text-white/60 hover:text-white" : "text-[#1A0200]/70 hover:text-[#1A0200]"}`}>
                 Contact
               </Link>
             </div>
@@ -161,16 +171,36 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className={`w-12 h-12 flex flex-col items-center justify-center gap-[6px] rounded-full bg-white hover:bg-white/90 transition-all duration-500 cursor-pointer ${scrolled ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none absolute"}`}
+              className={`w-12 h-12 flex flex-col items-center justify-center gap-[6px] rounded-full bg-white transition-all duration-500 cursor-pointer hover:bg-white/90 ${scrolled ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none absolute"}`}
             >
-              <span className="w-5 h-[1.5px] bg-[#0a0a0a] rounded-full" />
-              <span className="w-5 h-[1.5px] bg-[#0a0a0a] rounded-full" />
-              <span className="w-5 h-[1.5px] bg-[#0a0a0a] rounded-full" />
+              <span className="w-5 h-[1.5px] rounded-full bg-[#0a0a0a]" />
+              <span className="w-5 h-[1.5px] rounded-full bg-[#0a0a0a]" />
+              <span className="w-5 h-[1.5px] rounded-full bg-[#0a0a0a]" />
             </button>
           </div>
+          </div>
+
+          <Link
+            href="/"
+            className={`pointer-events-auto opacity-95 hover:opacity-100 transition-opacity duration-300 max-md:-ml-2 max-md:inline-flex max-md:flex-1 max-md:items-center max-md:justify-start md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:z-[1] ${
+              isHome ? "max-md:h-[3.35rem]" : "max-md:h-12"
+            }`}
+            aria-label="Lashstudiobia home"
+          >
+            <Image
+              src="/lashstudio-bia-logo.png"
+              alt="Lashstudio Bia"
+              width={512}
+              height={512}
+              priority
+              className={`w-auto object-contain object-center ${
+                isHome ? "h-16 max-md:h-14 md:h-[5.5rem]" : "h-14 max-md:h-12 md:h-16"
+              }`}
+            />
+          </Link>
 
           {/* Spacer voor vaste mobiele menu-knop (MobileMenu.tsx) */}
-          <div className="md:hidden w-11 h-11 shrink-0" aria-hidden />
+          <div className="md:hidden w-11 h-11 shrink-0 pointer-events-none" aria-hidden />
         </nav>
       </header>
 

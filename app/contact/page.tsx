@@ -3,54 +3,22 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Plus, Minus, Send, Check, Mail, Phone, MapPin } from "lucide-react";
-import { AMES_CONTACT, getBookingPackageOptions } from "../lib/amesPackages";
+import { ArrowLeft, Plus, Minus, Send, Check, Phone, MapPin } from "lucide-react";
+import { AMES_CONTACT, getBookingPackageOptions, isMaPackageId } from "../lib/amesPackages";
+import { openAmesBooking } from "../lib/amesAvailability";
+import luxeAlignFaqs from "../lib/amesFaqs";
 
-const AMES_BLUE = "#1801AC";
+const AMES_BLUE = "#CD9861";
 const bookingPackageOptions = getBookingPackageOptions();
 
-const faqs = [
-  {
-    question: "Hoe werkt detailing op locatie bij Ames?",
-    answer:
-      "Jij kiest tijd en adres, wij komen met materiaal en equipment naar je toe. Je auto wordt ter plekke gewassen, gepoetst of volledig gedetailled — thuis, op werk of op een andere locatie in de regio.",
-  },
-  {
-    question: "Heb ik water of stroom nodig op locatie?",
-    answer:
-      "In de meeste gevallen niet. We nemen onze eigen voorzieningen mee waar nodig. Staat er iets speciaals op je locatie, vermeld het even in het formulier, dan stemmen we dat vooraf af.",
-  },
-  {
-    question: "Hoe snel kan ik een afspraak krijgen?",
-    answer:
-      "Na je aanvraag nemen we binnen 24 uur contact op om een geschikt moment te plannen. Voor spoed kun je ons ook direct bellen of appen via WhatsApp.",
-  },
-  {
-    question: "Welk pakket past bij mijn auto?",
-    answer:
-      "Basic is ideaal voor onderhoud, Showroom voor diepere reiniging en bescherming, Special voor maximale afwerking. Kies interieur, exterieur of combo — twijfel je, beschrijf je auto in het bericht.",
-  },
-  {
-    question: "Wat kost een behandeling op locatie?",
-    answer:
-      "De prijs hangt af van pakket, formaat van de auto en staat van het voertuig. Na je aanvraag ontvang je een duidelijke prijsindicatie voordat we inplannen.",
-  },
-  {
-    question: "In welk gebied rijden jullie?",
-    answer:
-      "We zijn actief in heel Zuid-Holland. Vul je adres in bij het boeken; rijden we buiten ons standaardgebied, laten we dat weten met eventuele reiskosten.",
-  },
-];
-
 const contactMethods = [
-  { icon: Mail, value: AMES_CONTACT.email, href: AMES_CONTACT.emailHref },
   { icon: Phone, value: AMES_CONTACT.phoneDisplay, href: AMES_CONTACT.phoneHref },
   { icon: MapPin, value: AMES_CONTACT.area, href: undefined },
 ];
 
 export default function Contact() {
   const [openIndex, setOpenIndex] = useState<number>(0);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [form, setForm] = useState({
     naam: "",
@@ -63,17 +31,24 @@ export default function Contact() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    openAmesBooking({
+      packageId: isMaPackageId(form.pakket) ? form.pakket : undefined,
+      naam: form.naam,
+      telefoon: form.telefoon,
+      email: form.email,
+      adres: form.adres,
+      aandacht: form.bericht,
+    });
   }
 
   function fieldBorder(field: string) {
     return focusedField === field
-      ? "border-[#1801AC]/55"
+      ? "border-[#CD9861]/55"
       : "border-white/[0.06]";
   }
 
   return (
-    <div className="ames-page-shell min-h-screen flex flex-col">
+    <div className="ames-page-shell luxe-light min-h-screen flex flex-col">
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between px-6 md:px-8 py-6">
         <Link
@@ -85,11 +60,11 @@ export default function Contact() {
         </Link>
         <Link href="/" className="opacity-95 hover:opacity-100 transition-opacity">
           <Image
-            src="/Gemini_Generated_Image_q9s8bpq9s8bpq9s8-removebg-preview.png"
-            alt="Ames Car Detailing"
-            width={873}
-            height={229}
-            className="h-8 w-auto md:h-9 object-contain"
+            src="/lashstudio-bia-logo.png"
+            alt="Lashstudio Bia"
+            width={488}
+            height={200}
+            className="h-9 w-auto md:h-10 object-contain"
           />
         </Link>
       </header>
@@ -98,18 +73,17 @@ export default function Contact() {
         {/* Hero */}
         <div className="pt-10 pb-16 md:pb-20">
           <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] tracking-[0.2em] text-white/30 uppercase mb-5 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: AMES_BLUE }} />
+            <span className="w-2 h-2 rounded-full bg-[#1A0200]" />
             Contact
           </p>
           <h1 className="font-[family-name:var(--font-outfit)] text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-[0.85] mb-5">
             Neem contact
             <br />
             met{" "}
-            <span className="italic font-normal text-[#FF9220]">Ames detailing</span>
+            <span className="italic font-normal text-[#CD9861]">Lashstudiobia</span>
           </h1>
           <p className="text-white/40 text-[15px] leading-relaxed max-w-lg">
-            Vragen, spoed of direct een afspraak plannen? Vul het formulier in of bel ons.
-            We komen naar jou toe voor autowas en detailing op locatie.
+            Vragen over een set? Bel of app op 06 2048 5783.
           </p>
         </div>
 
@@ -119,10 +93,9 @@ export default function Contact() {
             const inner = (
               <>
                 <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center border border-[#1801AC]/25"
-                  style={{ backgroundColor: "rgba(24, 1, 172, 0.12)" }}
+                  className="w-7 h-7 rounded-full flex items-center justify-center border border-white/20 bg-white/10"
                 >
-                  <m.icon className="w-3.5 h-3.5 text-[#6B5CFF] group-hover:text-[#8B7EFF] transition-colors" />
+                  <m.icon className="w-3.5 h-3.5 text-white/80 group-hover:text-white transition-colors" />
                 </div>
                 <span className="text-white/60 text-[13px] font-medium group-hover:text-white/80 transition-colors">
                   {m.value}
@@ -130,7 +103,7 @@ export default function Contact() {
               </>
             );
             const cls =
-              "flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-white/[0.08] bg-white/[0.02] hover:border-[#1801AC]/35 hover:bg-[#1801AC]/[0.06] transition-all group";
+              "flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-white/[0.08] bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.05] transition-all group";
             return m.href ? (
               <Link key={m.value} href={m.href} className={cls}>
                 {inner}
@@ -150,11 +123,11 @@ export default function Contact() {
               <div
                 className="w-16 h-16 rounded-full border flex items-center justify-center mb-6"
                 style={{
-                  backgroundColor: "rgba(24, 1, 172, 0.15)",
-                  borderColor: "rgba(24, 1, 172, 0.35)",
+                  backgroundColor: "rgba(212, 175, 55, 0.15)",
+                  borderColor: "rgba(212, 175, 55, 0.35)",
                 }}
               >
-                <Check className="w-7 h-7 text-[#8B7EFF]" />
+                <Check className="w-7 h-7 text-[#CD9861]" />
               </div>
               <h3 className="font-[family-name:var(--font-outfit)] text-2xl font-bold text-white mb-2">
                 Aanvraag ontvangen!
@@ -266,7 +239,7 @@ export default function Contact() {
                   onFocus={() => setFocusedField("bericht")}
                   onBlur={() => setFocusedField(null)}
                   onChange={(e) => setForm({ ...form, bericht: e.target.value })}
-                  placeholder="Automerk, gewenste datum/tijd, bijzonderheden..."
+                  placeholder="Je vraag of eventuele bijzonderheden over je behandeling..."
                   className="w-full bg-transparent text-white text-[16px] md:text-[18px] font-medium py-3 placeholder:text-white/10 focus:outline-none resize-none"
                 />
               </div>
@@ -288,20 +261,20 @@ export default function Contact() {
         <div className="border-t border-white/[0.06] pt-16 md:pt-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
             <div className="lg:col-span-4">
-              <p className="font-[family-name:var(--font-fragment-mono)] text-xs tracking-widest text-[#FF9220]/80 uppercase mb-4">
+              <p className="font-[family-name:var(--font-fragment-mono)] text-xs tracking-widest text-[#ffffff]/80 uppercase mb-4">
                 FAQ
               </p>
               <h2 className="font-[family-name:var(--font-outfit)] text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
                 Veelgestelde vragen
               </h2>
               <p className="text-white/40 text-sm leading-relaxed">
-                Alles over boeken, pakketten en detailing op locatie bij Ames.
+                Alles over wimperextensions, pakketten en afspraken bij Lashstudio Bia.
               </p>
             </div>
 
             <div className="lg:col-span-8">
               <div className="flex flex-col">
-                {faqs.map((faq, i) => (
+                {luxeAlignFaqs.map((faq, i) => (
                   <div key={i} className="border-t border-white/[0.06]">
                     <button
                       type="button"
@@ -335,20 +308,25 @@ export default function Contact() {
       <div className="relative z-10 border-t border-white/[0.06]">
         <div className="max-w-[1100px] mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-6">
-            <span className="text-sm font-semibold text-white tracking-tight">Ames detailing</span>
+            <span className="text-sm font-semibold text-white tracking-tight">Lashstudio Bia</span>
             <span className="text-xs text-white/30">
               © {new Date().getFullYear()} All rights reserved.
             </span>
           </div>
           <div className="flex items-center gap-6">
-            {["Instagram", "WhatsApp", "TikTok"].map((social) => (
-              <Link
-                key={social}
-                href="#"
-                className="text-xs text-white/30 hover:text-[#1801AC] transition-colors"
+            {[
+              { label: "Instagram", href: "https://www.instagram.com/lashstudiobia/" },
+              { label: "WhatsApp", href: AMES_CONTACT.whatsappHref },
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-white/30 hover:text-[#CD9861] transition-colors"
               >
-                {social}
-              </Link>
+                {social.label}
+              </a>
             ))}
           </div>
         </div>

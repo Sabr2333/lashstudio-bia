@@ -1,18 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Calendar, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Calendar, ChevronDown, X } from "lucide-react";
+import Link from "next/link";
+import { maPackages } from "../lib/amesPackages";
 
 const menuItems = [
   { label: "Home", href: "/" },
   { label: "Over ons", href: "/over-ons" },
-  { label: "Pakketten", href: "/#pakketten" },
   { label: "Contact", href: "/contact" },
+];
+
+const packageItems = [
+  ...maPackages.map((item) => ({ label: item.title, href: item.href })),
+  { label: "Alle pakketten", href: "/pakketten" },
 ];
 
 export default function MobileMenu() {
   const detailsRef = useRef<HTMLDetailsElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const [packagesOpen, setPackagesOpen] = useState(false);
+
+  const closeMenu = () => {
+    detailsRef.current?.removeAttribute("open");
+    setPackagesOpen(false);
+  };
 
   useEffect(() => {
     const details = detailsRef.current;
@@ -26,42 +37,6 @@ export default function MobileMenu() {
     return () => {
       details.removeEventListener("toggle", onToggle);
       document.body.style.overflow = "";
-    };
-  }, []);
-
-  useEffect(() => {
-    const overlay = overlayRef.current;
-    const details = detailsRef.current;
-    if (!overlay || !details) return;
-
-    let lastTap = 0;
-
-    const closeMenu = () => {
-      details.removeAttribute("open");
-    };
-
-    const handleInteraction = (e: Event) => {
-      const now = Date.now();
-      if (now - lastTap < 350) return;
-      lastTap = now;
-
-      const target = e.target as HTMLElement;
-      if (target.closest("[data-menu-close]")) {
-        e.preventDefault();
-        closeMenu();
-        return;
-      }
-      if (target.closest("[data-menu-link]")) {
-        closeMenu();
-      }
-    };
-
-    overlay.addEventListener("touchend", handleInteraction, { passive: false });
-    overlay.addEventListener("click", handleInteraction);
-
-    return () => {
-      overlay.removeEventListener("touchend", handleInteraction);
-      overlay.removeEventListener("click", handleInteraction);
     };
   }, []);
 
@@ -79,7 +54,6 @@ export default function MobileMenu() {
       </summary>
 
       <div
-        ref={overlayRef}
         className="fixed inset-0 z-[10005] flex flex-col bg-[#0a0a0a]"
         role="dialog"
         aria-modal="true"
@@ -91,7 +65,7 @@ export default function MobileMenu() {
         >
           <button
             type="button"
-            data-menu-close
+            onClick={closeMenu}
             className="flex items-center gap-3 touch-manipulation"
             aria-label="Menu sluiten"
           >
@@ -102,26 +76,56 @@ export default function MobileMenu() {
           </button>
         </div>
 
-        <nav className="flex flex-1 flex-col items-center justify-center gap-10 pb-16">
+        <nav className="flex flex-1 flex-col items-center justify-center gap-6 overflow-y-auto px-5 pb-16">
           {menuItems.map((item) => (
-            <a
+            <Link
               key={item.label}
               href={item.href}
-              data-menu-link
+              onClick={() => window.setTimeout(closeMenu, 0)}
               className="font-[family-name:var(--font-outfit)] text-4xl font-black uppercase tracking-tight text-white/80 touch-manipulation"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
 
-          <a
+          <div className="flex flex-col items-center">
+            <button
+              type="button"
+              aria-expanded={packagesOpen}
+              aria-controls="mobile-package-links"
+              onClick={() => setPackagesOpen((open) => !open)}
+              className="flex items-center gap-2 font-[family-name:var(--font-outfit)] text-4xl font-black uppercase tracking-tight text-white/80 touch-manipulation"
+            >
+              Pakketten
+              <ChevronDown
+                className={`h-6 w-6 transition-transform ${packagesOpen ? "rotate-180" : ""}`}
+                aria-hidden="true"
+              />
+            </button>
+            {packagesOpen && (
+              <div id="mobile-package-links" className="mt-4 grid w-full justify-items-center gap-3 text-center">
+                {packageItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => window.setTimeout(closeMenu, 0)}
+                    className="block font-[family-name:var(--font-outfit)] text-lg font-semibold text-white/60 touch-manipulation"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
             href="/groei-scan"
-            data-menu-link
+            onClick={() => window.setTimeout(closeMenu, 0)}
             className="ames-btn-glow ames-btn-glow--blue mt-4 flex items-center justify-center gap-2.5 rounded-full px-10 py-4 text-[14px] font-semibold touch-manipulation"
           >
             <Calendar className="relative z-[1] w-4 h-4 shrink-0 opacity-90" strokeWidth={2.25} />
             <span className="relative z-[1]">Boek nu</span>
-          </a>
+          </Link>
         </nav>
       </div>
     </details>

@@ -7,43 +7,37 @@ import { MessageCircle, Send, X } from "lucide-react";
 type Message = { role: "user" | "assistant"; text: string };
 
 const quickPrompts = [
-  "Basic of Showroom, wat is het verschil?",
-  "Alleen interieur of combo?",
-  "Wat past bij een lease-auto?",
-  "Wanneer kies ik Special?",
+  "Wat kost een nieuwe set?",
+  "Wat kost opvullen?",
+  "Wat is de 40% regel?",
+  "Hoe laat annuleren?",
 ];
 
 function botReply(input: string): string {
   const t = input.toLowerCase();
 
-  if (t.includes("basic") && (t.includes("showroom") || t.includes("verschil")))
-    return "Basic is een frisse onderhoudsbeurt: stofzuigen, dashboard, handwas — ideaal elke paar weken. Showroom gaat dieper (kleibehandeling, diep interieur, wax/sealant) en is onze meest gekozen stap voor een echt zichtbaar resultaat. Twijfel je? Meestal is Showroom de sweet spot.";
+  if (t.includes("40") || t.includes("regel"))
+    return "Bij minder dan 40% van de wimpers nog aanwezig, wordt er een nieuwe set in rekening gebracht.";
 
-  if (t.includes("special"))
-    return "Special is ons all-in pakket: alles van Showroom plus extra’s zoals geur/ozon, sterkere lakbescherming of polish waar nodig. Perfect vóór verkoop, lease-oplevering of als je het maximale wilt.";
+  if (t.includes("annul") || t.includes("verzet") || t.includes("24"))
+    return "Annuleren of verzetten kan kosteloos tot 24 uur van tevoren. Binnen 24 uur wordt 50% van de behandeling in rekening gebracht.";
 
-  if (t.includes("combo") || t.includes("beide") || t.includes("binnen en buiten"))
-    return "Combo = interieur én exterieur in één afspraak. Handig als je het hele voertuig in één keer showroomklaar wilt. Alleen vlekken binnen? Kies Interieur. Alleen lak/velgen? Kies Exterieur.";
+  if (t.includes("laat") || t.includes("15"))
+    return "Kom je meer dan 15 minuten te laat? Dan kan ik helaas niet garanderen dat we de volledige behandeling kunnen uitvoeren.";
 
-  if (t.includes("interieur") && !t.includes("exterieur"))
-    return "Kies Interieur als stoelen, geur, dashboard of matten je hoofdzorg zijn. Basic (vanaf €89) voor onderhoud, Showroom (€129) voor diep reinigen, Special (€199) voor geurbehandeling en maximale afwerking.";
+  if (t.includes("nazorg") || t.includes("water") || t.includes("sauna"))
+    return "Vermijd de eerste 24 uur water, stoom, sauna en oogmake-up. Gebruik geen oliehoudende producten rondom de ogen.";
 
-  if (t.includes("exterieur") || t.includes("lak") || t.includes("velgen"))
-    return "Exterieur richt zich op handwas, velgen en lak. Basic vanaf €69, Showroom €119 (decontaminatie + sealant), Special €169 (polish & langdurige bescherming). Veel klanten met parkschade of doffe lak gaan voor Showroom of Special.";
+  if (t.includes("volume"))
+    return "Alle volume sets: nieuwe set €65. Opvullen na 2 weken €35, na 3 weken €45, na 4 weken €55.";
 
-  if (t.includes("lease") || t.includes("oplever"))
-    return "Voor lease-oplevering adviseren we vaak Showroom Combo (€229) of Special Combo (€299) — binnen & buiten grondig, met extra aandacht voor details die leasebedrijven checken. Via de boek scan kunnen we exact afstemmen op je auto.";
-
-  if (t.includes("prijs") || t.includes("kost") || t.includes("euro") || t.includes("€"))
-    return "Richtprijzen: Interieur Basic €89 · Showroom €129 · Special €199. Exterieur vanaf €69 · €119 · €169. Combo vanaf €129 · €229 · €299. Definitieve prijs hangt af van formaat en staat — na je scan geven we een duidelijke indicatie.";
-
-  if (t.includes("polijst") || t.includes("ceramic") || t.includes("ppf") || t.includes("wrap"))
-    return "Polijsten, ceramic coatings, PPF, wrappen en schadeherstel doen we op maat. Mail info@amesdetailing.nl of bel 06 40871617 met foto’s — dan stellen we een passend plan op.";
+  if (t.includes("one") || t.includes("opvul") || t.includes("prijs") || t.includes("kost") || t.includes("€") || t.includes("euro"))
+    return "One by one: nieuwe set €50, 2 weken €30, 3 weken €40, 4 weken €50. Volume: nieuwe set €65, 2 weken €35, 3 weken €45, 4 weken €55.";
 
   if (t.includes("hoi") || t.includes("hallo") || t.includes("hey"))
-    return "Hoi! Ik help je kiezen tussen Basic, Showroom en Special — voor interieur, exterieur of combo. Waar ligt je focus: binnen, buiten, of alles in één keer?";
+    return "Hoi. Ik help je een set kiezen. Bellen of appen kan op 06 2048 5783.";
 
-  return "Vertel kort wat je auto nodig heeft (binnen, buiten, geur, lak, lease…) — dan wijs ik je naar Basic, Showroom of Special. Je kunt ook een van de suggesties hieronder tikken.";
+  return "Lashstudiobia: one by one vanaf €30 en volume vanaf €35. Bellen of appen kan op 06 2048 5783.";
 }
 
 type AmesPackageHelpModalProps = {
@@ -55,7 +49,7 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      text: "Ik help je het juiste Ames-pakket kiezen. Interieur, exterieur of combo elk in Basic, Showroom of Special. Stel een vraag of kies een suggestie.",
+      text: "One by one: nieuwe set €50, opvullen €30, €40 of €50. Volume: nieuwe set €65, opvullen €35, €45 of €55.",
     },
   ]);
   const [draft, setDraft] = useState("");
@@ -95,7 +89,7 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
 
   return (
     <div
-      className="fixed inset-0 z-[10020] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[10020] flex items-stretch justify-center sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="ames-help-title"
@@ -107,10 +101,10 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
         onClick={onClose}
       />
 
-      <div className="ames-package-help-modal ames-package-card relative z-[1] w-full max-w-lg max-h-[min(640px,calc(100vh-2rem))] flex flex-col rounded-2xl md:rounded-3xl bg-[#0f0f0f] shadow-[0_24px_80px_rgba(0,0,0,0.65)]">
-        <div className="flex items-center justify-between gap-3 px-5 pt-5 pb-3 border-b border-white/[0.06]">
+      <div className="ames-package-help-modal ames-package-card relative z-[1] flex h-[100dvh] w-full max-h-[100dvh] flex-col bg-[#0f0f0f] shadow-[0_24px_80px_rgba(0,0,0,0.65)] sm:h-auto sm:max-h-[min(640px,92dvh)] sm:max-w-lg sm:rounded-3xl">
+        <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] px-4 pb-3 pt-[max(1rem,env(safe-area-inset-top))] sm:px-5 sm:pt-5">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1801AC]/25 border border-[#1801AC]/35">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#CD9861]/25 border border-[#CD9861]/35">
               <MessageCircle className="w-4 h-4 text-white/80" strokeWidth={2} />
             </span>
             <div className="min-w-0">
@@ -126,14 +120,14 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
           <button
             type="button"
             onClick={onClose}
-            className="shrink-0 h-9 w-9 rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/25 flex items-center justify-center transition-colors"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/50 transition-colors hover:border-white/25 hover:text-white"
             aria-label="Sluit venster"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-3 min-h-[200px]">
+        <div ref={scrollRef} className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 sm:px-5">
           {messages.map((msg, i) => (
             <div
               key={`${msg.role}-${i}`}
@@ -142,7 +136,7 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
               <div
                 className={`max-w-[92%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
                   msg.role === "user"
-                    ? "bg-[#1801AC]/35 border border-[#1801AC]/30 text-white/90"
+                    ? "bg-[#CD9861]/35 border border-[#CD9861]/30 text-white/90"
                     : "bg-white/[0.05] border border-white/[0.08] text-white/70"
                 }`}
               >
@@ -152,18 +146,18 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
           ))}
           {typing && (
             <p className="text-[12px] text-white/35 font-[family-name:var(--font-fragment-mono)]">
-              Ames assistent typt…
+              Lashstudiobia typt…
             </p>
           )}
         </div>
 
-        <div className="px-5 pb-3 flex flex-wrap gap-2">
+        <div className="flex gap-2 overflow-x-auto px-4 pb-3 sm:flex-wrap sm:px-5">
           {quickPrompts.map((prompt) => (
             <button
               key={prompt}
               type="button"
               onClick={() => send(prompt)}
-              className="text-left text-[11px] text-white/55 hover:text-white/85 border border-white/10 hover:border-[#FF9220]/30 rounded-full px-3 py-1.5 transition-colors"
+              className="shrink-0 text-left text-[12px] text-white/55 hover:text-white/85 border border-white/10 hover:border-[#ffffff]/30 rounded-full px-3 py-2 transition-colors"
             >
               {prompt}
             </button>
@@ -171,13 +165,13 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
         </div>
 
         <form
-          className="px-5 pb-5 pt-2 border-t border-white/[0.06]"
+          className="border-t border-white/[0.06] px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 sm:px-5"
           onSubmit={(e) => {
             e.preventDefault();
             send(draft);
           }}
         >
-          <div className="flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/10 pl-4 pr-1.5 py-1.5 focus-within:border-[#1801AC]/40 transition-colors">
+          <div className="flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/10 pl-4 pr-1.5 py-1.5 focus-within:border-[#CD9861]/40 transition-colors">
             <input
               type="text"
               value={draft}
@@ -197,7 +191,7 @@ export default function AmesPackageHelpModal({ open, onClose }: AmesPackageHelpM
           </div>
           <p className="mt-3 text-center text-[10px] text-white/30">
             Liever persoonlijk contact?{" "}
-            <Link href="/groei-scan" className="text-[#FF9220]/80 hover:text-[#FF9220]">
+            <Link href="/groei-scan" className="text-[#ffffff]/80 hover:text-[#ffffff]">
               Start boek scan
             </Link>
           </p>

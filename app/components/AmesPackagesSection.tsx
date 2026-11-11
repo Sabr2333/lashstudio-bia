@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Calendar, Check, HelpCircle, Mail, Phone } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, ArrowRight, Calendar, Check, ChevronDown, HelpCircle, Phone } from "lucide-react";
 import AmesPackageHelpModal from "./AmesPackageHelpModal";
 import MobilePayBadges from "./MobilePayBadges";
+import { AMES_CONTACT, lashHouseRules, maPackages } from "../lib/amesPackages";
 
 type Category = "interieur" | "exterieur" | "combo";
 type Tier = "basic" | "showroom" | "special";
@@ -33,7 +35,7 @@ const tierMeta: Record<
   basic: {
     title: "Basic Pack",
     tag: "Instap",
-    description: "Een frisse, nette basis — ideaal voor onderhoud tussen grotere beurten door.",
+    description: "Een frisse, nette basis, ideaal voor onderhoud tussen grotere beurten door.",
   },
   showroom: {
     title: "Showroom Pack",
@@ -162,18 +164,38 @@ export default function AmesPackagesSection({
   showMaatwerk = true,
   className = "",
 }: AmesPackagesSectionProps) {
-  const [category, setCategory] = useState<Category>("interieur");
+  const router = useRouter();
   const [helpOpen, setHelpOpen] = useState(false);
   const [maatwerkVisible, setMaatwerkVisible] = useState(false);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+  const [showAllPackages, setShowAllPackages] = useState(false);
   const maatwerkRef = useRef<HTMLDivElement>(null);
-  const packages = buildPackages(category);
+  const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const c = params.get("c") as Category | null;
-    if (c && c in categoryLabels) setCategory(c);
+    const el = rowRef.current;
+    if (!el) return;
+    const sync = () => {
+      setCanPrev(el.scrollLeft > 8);
+      setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+    };
+    sync();
+    el.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    return () => {
+      el.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+    };
   }, []);
 
+  function scrollCards(direction: 1 | -1) {
+    const el = rowRef.current;
+    if (!el) return;
+    const gap = 20;
+    const card = (el.clientWidth - gap * 2) / 3;
+    el.scrollBy({ left: direction * (card + gap), behavior: "smooth" });
+  }
   useEffect(() => {
     const el = maatwerkRef.current;
     if (!el) return;
@@ -195,28 +217,26 @@ export default function AmesPackagesSection({
   return (
     <section
       id="pakketten"
-      className={`ames-packages-section relative scroll-mt-20 pt-10 md:pt-32 pb-28 md:pb-24 ${className}`}
+      className={`ames-packages-section luxe-light relative scroll-mt-20 pt-10 md:pt-32 pb-28 md:pb-24 ${className}`}
     >
       <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-6 lg:px-8">
         <div className="ames-packages-intro flex flex-col items-start">
           <div className="flex w-full flex-col md:flex-row md:items-end md:justify-between gap-5 md:gap-6 mb-7 md:mb-12">
             <div className="w-full min-w-0 text-left">
-              <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] md:text-xs tracking-[0.22em] text-[#FF9220]/85 uppercase mb-3 md:mb-4 flex items-center gap-2">
-                <span className="w-2 h-2 shrink-0 rounded-full bg-[#FF9220]" aria-hidden />
-                Onze pakketten
+              <p className="font-[family-name:var(--font-fragment-mono)] text-[11px] md:text-xs tracking-[0.22em] text-[#CD9861] uppercase mb-3 md:mb-4">
+                Behandelingen
               </p>
               <h2 className="font-[family-name:var(--font-outfit)] text-[2.35rem] leading-[0.9] sm:text-4xl md:text-6xl font-[900] text-[#E9E8E3] uppercase tracking-tight">
                 Kies jouw{" "}
-                <span className="italic font-normal text-[#FF9220]">behandeling</span>
+                <span className="italic font-normal text-[#CD9861]">behandeling</span>
               </h2>
               <p className="mt-4 md:mt-5 text-white/50 text-[15px] md:text-base max-w-lg leading-relaxed">
-                Interieur, exterieur of combo elk in Basic, Showroom of Special. Wij komen naar jou
-                toe in heel Zuid-Holland.
+                One by one en alle volume sets. Nieuwe set, of opvullen na 2, 3 of 4 weken.
               </p>
               <div className="md:hidden mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
                 <Link
                   href="/groei-scan"
-                  className="inline-flex items-center gap-2 text-[#FF9220]/85 text-sm font-medium hover:text-[#FF9220] transition-colors"
+                  className="inline-flex items-center gap-2 text-[#ffffff]/85 text-sm font-medium hover:text-[#ffffff] transition-colors"
                 >
                   <Calendar className="w-4 h-4 shrink-0 opacity-85" strokeWidth={2.25} />
                   Boek via scan
@@ -228,7 +248,7 @@ export default function AmesPackagesSection({
             <div className="hidden md:flex flex-wrap items-center justify-end gap-x-3 gap-y-2 shrink-0">
               <Link
                 href="/groei-scan"
-                className="inline-flex items-center gap-2 text-[#FF9220]/80 text-sm hover:text-[#FF9220] transition-colors"
+                className="inline-flex items-center gap-2 text-[#ffffff]/80 text-sm hover:text-[#ffffff] transition-colors"
               >
                 <Calendar className="w-4 h-4 shrink-0 opacity-85" strokeWidth={2.25} />
                 Boek via scan
@@ -239,36 +259,22 @@ export default function AmesPackagesSection({
           </div>
 
           <div className="flex w-full flex-wrap justify-start gap-2 mb-10 md:mb-12">
-            {(Object.keys(categoryLabels) as Category[]).map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setCategory(key)}
-              className={`rounded-full px-5 py-2.5 text-[12px] md:text-[13px] font-semibold uppercase tracking-wide transition-all duration-300 border ${
-                category === key
-                  ? "bg-[#FF9220]/12 border-[#FF9220]/45 text-[#E9E8E3]"
-                  : "bg-white/[0.03] border-white/10 text-white/45 hover:border-white/20 hover:text-white/70"
-              }`}
-            >
-              {categoryLabels[key]}
-            </button>
-            ))}
             <div className="flex w-full flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:w-auto max-md:mt-1.5 max-md:w-full">
             <button
               type="button"
               onClick={() => setHelpOpen(true)}
-              className="ames-help-tab-btn rounded-full px-5 py-2.5 text-[12px] md:text-[13px] font-bold uppercase tracking-wide transition-all duration-300 border bg-[#1801AC]/22 border-[#1801AC]/55 text-white hover:bg-[#1801AC]/28 hover:border-[#6B5CFF]/65 inline-flex items-center gap-2 max-md:w-full max-md:justify-center max-md:shadow-[0_0_20px_rgba(24,1,172,0.2)]"
+              className="ames-help-tab-btn rounded-full px-5 py-2.5 text-[12px] md:text-[13px] font-bold uppercase tracking-wide transition-all duration-300 border bg-[#CD9861]/15 border-[#CD9861]/45 text-white hover:bg-[#CD9861]/25 hover:border-[#CD9861]/70 inline-flex items-center gap-2 max-md:w-full max-md:justify-center max-md:shadow-[0_0_20px_rgba(212,175,55,0.28)]"
             >
-              <HelpCircle className="w-4 h-4 text-[#8B7EFF] shrink-0" strokeWidth={2.25} />
+              <HelpCircle className="w-4 h-4 text-[#CD9861] shrink-0" strokeWidth={2.25} />
               Vragen of hulp
             </button>
             <p className="ames-help-tab-hint hidden sm:flex items-center gap-2 text-[12px] md:text-[13px] text-white/45 max-w-[280px] leading-snug pl-0.5">
               <ArrowRight
-                className="w-4 h-4 shrink-0 text-[#FF9220] rotate-180 showcase-arrow-nudge"
+                className="w-4 h-4 shrink-0 text-[#CD9861] rotate-180 showcase-arrow-nudge"
                 strokeWidth={2.25}
                 aria-hidden
               />
-              <span className="font-[family-name:var(--font-playfair)] italic text-[#FF9220]/85">
+              <span className="font-[family-name:var(--font-playfair)] italic text-[#CD9861]">
                 Mocht je vragen hebben of kom je er niet uit
               </span>
             </p>
@@ -278,22 +284,31 @@ export default function AmesPackagesSection({
 
         <AmesPackageHelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {packages.map((pkg) => (
+        <div className="relative">
+        <div
+          ref={rowRef}
+          className="flex flex-col gap-4 md:flex-row md:gap-5 md:overflow-x-auto md:snap-x md:snap-mandatory md:scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {maPackages.map((pkg, index) => (
             <article
-              key={pkg.tier}
-              className={`ames-package-card relative flex flex-col rounded-2xl md:rounded-3xl p-6 md:p-7 bg-[#0f0f0f] min-h-full ${
-                pkg.popular ? "ames-package-card--featured md:-translate-y-1" : ""
-              }`}
+              id={pkg.id}
+              key={pkg.id}
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest("[data-book]")) return;
+                router.push(pkg.href);
+              }}
+              className={`ames-package-card relative flex w-full shrink-0 cursor-pointer scroll-mt-32 flex-col rounded-2xl bg-[#0f0f0f] p-6 md:w-[calc((100%-2.5rem)/3)] md:snap-start md:rounded-3xl md:p-7 min-h-full ${
+                pkg.popular ? "ames-package-card--featured" : ""
+              } ${!showAllPackages && index >= 3 ? "max-md:hidden" : ""}`}
             >
               <div className="flex items-start justify-between gap-2 mb-4">
-                <p className="font-[family-name:var(--font-fragment-mono)] text-[9px] md:text-[10px] tracking-[0.18em] text-[#FF9220]/80 uppercase">
-                  {pkg.label}
+                <p className="font-[family-name:var(--font-fragment-mono)] text-[9px] md:text-[10px] tracking-[0.18em] text-[#ffffff]/80 uppercase">
+                  {pkg.tag}
                 </p>
                 <span
                   className={`text-[10px] font-medium uppercase tracking-wider rounded-full px-2.5 py-1 ${
                     pkg.popular
-                      ? "bg-[#FF9220]/15 text-[#FF9220] border border-[#FF9220]/30"
+                      ? "bg-[#CD9861]/18 text-[#CD9861] border border-[#CD9861]/35"
                       : "bg-white/[0.04] text-white/40 border border-white/[0.08]"
                   }`}
                 >
@@ -307,15 +322,14 @@ export default function AmesPackagesSection({
               <p className="text-white/45 text-[13px] leading-relaxed mb-5">{pkg.description}</p>
 
               <p className="font-[family-name:var(--font-outfit)] text-3xl font-bold text-white mb-6">
-                €{pkg.price}
-                <span className="text-sm font-normal text-white/35 ml-1">vanaf</span>
+                €{pkg.price.toLocaleString("nl-NL")}
               </p>
 
               <ul className="space-y-2.5 mb-8 flex-1">
                 {pkg.features.map((line) => (
                   <li key={line} className="flex gap-2.5 text-[12px] md:text-[13px] text-white/55 leading-snug">
                     <Check
-                      className={`w-4 h-4 shrink-0 mt-0.5 ${pkg.popular ? "text-[#FF9220]" : "text-white/35"}`}
+                      className={`w-4 h-4 shrink-0 mt-0.5 ${pkg.popular ? "text-[#CD9861]" : "text-white/35"}`}
                       strokeWidth={2.5}
                     />
                     <span>{line}</span>
@@ -324,8 +338,9 @@ export default function AmesPackagesSection({
               </ul>
 
               <Link
-                href="/groei-scan"
-                className={`ames-package-btn w-full flex items-center justify-center rounded-full px-4 py-3.5 min-h-[52px] text-[11px] font-semibold uppercase tracking-wider hover:scale-[1.02] ${
+                data-book
+                href={`/groei-scan?p=${pkg.id}`}
+                className={`ames-package-btn relative z-[2] w-full flex items-center justify-center rounded-full px-4 py-3.5 min-h-[52px] text-[11px] font-semibold uppercase tracking-wider hover:scale-[1.02] ${
                   pkg.popular ? "ames-package-btn--primary" : "ames-package-btn--secondary"
                 }`}
               >
@@ -339,12 +354,43 @@ export default function AmesPackagesSection({
                       pkg.popular ? "text-white/60" : "text-white/55"
                     }`}
                   >
-                    Vanaf €{pkg.price}
+                    €{pkg.price.toLocaleString("nl-NL")}
                   </span>
                 </span>
               </Link>
             </article>
           ))}
+        </div>
+        {!showAllPackages && (
+          <button
+            type="button"
+            onClick={() => setShowAllPackages(true)}
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-[#CD9861]/50 bg-[#CD9861] px-5 py-3.5 text-[13px] font-semibold text-[#1a0200] md:hidden"
+          >
+            Tik voor meer
+            <ChevronDown className="h-4 w-4" strokeWidth={2.4} />
+          </button>
+        )}
+        {canPrev && (
+          <button
+            type="button"
+            onClick={() => scrollCards(-1)}
+            className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#CD9861]/40 bg-[#111111]/95 text-[#CD9861] shadow-[0_8px_24px_rgba(0,0,0,0.45)] md:flex"
+            aria-label="Vorige behandeling"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+        )}
+        {canNext && (
+          <button
+            type="button"
+            onClick={() => scrollCards(1)}
+            className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#CD9861]/40 bg-[#111111]/95 text-[#CD9861] shadow-[0_8px_24px_rgba(0,0,0,0.45)] md:flex"
+            aria-label="Volgende behandeling"
+          >
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        )}
         </div>
 
         {showMaatwerk && (
@@ -356,27 +402,31 @@ export default function AmesPackagesSection({
             }`}
           >
             <div
-              className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-[#FF9220]/[0.06] via-transparent to-[#1801AC]/[0.05] ames-maatwerk-card__glow"
+              className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-[#ffffff]/[0.06] via-transparent to-[#CD9861]/[0.05] ames-maatwerk-card__glow"
               aria-hidden
             />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
               <div className="lg:col-span-7 space-y-4 md:space-y-5">
-                <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.2em] text-white/35 uppercase">
-                  Maatwerk
+                <p className="font-[family-name:var(--font-fragment-mono)] text-[10px] tracking-[0.2em] text-[#CD9861]/80 uppercase">
+                  Prijslijst
                 </p>
                 <h3 className="font-[family-name:var(--font-outfit)] text-xl md:text-2xl lg:text-[1.65rem] font-bold text-white leading-snug">
-                  Speciale behandelingen op aanvraag
+                  Goed om te weten
                 </h3>
-                <p className="text-white/45 text-sm md:text-[15px] leading-relaxed max-w-xl">
-                  Voor polijsten, ceramic coatings, PPF, wrappen en schadeherstel maken we een plan
-                  op maat. Stuur ons de details van je auto — wij reageren met een voorstel en prijs.
-                </p>
+                <div className="space-y-4 max-w-xl">
+                  {lashHouseRules.map((rule) => (
+                    <p key={rule.title} className="text-white/55 text-sm md:text-[15px] leading-relaxed">
+                      <span className="block font-semibold text-white/80">{rule.title}</span>
+                      {rule.text}
+                    </p>
+                  ))}
+                </div>
               </div>
 
               <div className="lg:col-span-5 flex flex-col gap-6 md:gap-7 lg:items-end lg:text-right">
                 <ul className="flex flex-wrap gap-2 lg:justify-end">
-                  {maatwerkItems.map((item, i) => (
+                  {["One by one €30 tot €50", "Volume €35 tot €65", "24 uur van tevoren", "15 minuten te laat"].map((item, i) => (
                     <li
                       key={item}
                       className="ames-maatwerk-tag text-[11px] text-white/60 border border-white/10 rounded-full px-3.5 py-2"
@@ -386,22 +436,13 @@ export default function AmesPackagesSection({
                     </li>
                   ))}
                 </ul>
-                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row flex-wrap gap-3 lg:justify-end w-full sm:w-auto">
-                  <Link
-                    href="mailto:info@amesdetailing.nl"
-                    className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[12px] font-medium border border-[#FF9220]/30 text-[#FF9220] hover:bg-[#FF9220]/10 transition-colors"
-                  >
-                    <Mail className="w-4 h-4" />
-                    info@amesdetailing.nl
-                  </Link>
-                  <Link
-                    href="tel:+31640871617"
-                    className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[12px] font-medium border border-white/15 text-white/70 hover:text-white hover:border-white/25 transition-colors"
-                  >
-                    <Phone className="w-4 h-4" />
-                    06 40871617
-                  </Link>
-                </div>
+                <Link
+                  href={AMES_CONTACT.phoneHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[12px] font-medium border border-[#CD9861]/40 text-[#CD9861] hover:border-[#CD9861] transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  {AMES_CONTACT.phoneDisplay}
+                </Link>
               </div>
             </div>
           </div>
